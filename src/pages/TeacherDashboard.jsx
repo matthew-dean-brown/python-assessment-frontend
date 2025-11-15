@@ -10,38 +10,30 @@ export default function TeacherDashboard() {
 
   return (
     <div>
-      <h1>Teacher Dashboard</h1>
-      <p>Simple view of all submissions (from mock API).</p>
+      <h2 className="text-3xl font-semibold text-primary mb-6">Teacher Dashboard</h2>
 
       {submissions.length === 0 && <p>No submissions yet.</p>}
 
       {submissions.length > 0 && (
-        <table
-          style={{
-            width: "100%",
-            borderCollapse: "collapse",
-            marginTop: "1rem",
-          }}
-        >
-          <thead>
+        <table className="w-full border-collapse bg-white shadow rounded-lg overflow-hidden">
+          <thead className="bg-primary text-white">
             <tr>
-              <th style={{ borderBottom: "1px solid #ccc", textAlign: "left" }}>ID</th>
-              <th style={{ borderBottom: "1px solid #ccc", textAlign: "left" }}>Student</th>
-              <th style={{ borderBottom: "1px solid #ccc", textAlign: "left" }}>Question</th>
-              <th style={{ borderBottom: "1px solid #ccc", textAlign: "left" }}>Score</th>
-              <th style={{ borderBottom: "1px solid #ccc", textAlign: "left" }}>When</th>
+              <th className="p-3 text-left">ID</th>
+              <th className="p-3 text-left">Student</th>
+              <th className="p-3 text-left">Question</th>
+              <th className="p-3 text-left">Score</th>
+              <th className="p-3 text-left">Submitted</th>
             </tr>
           </thead>
+
           <tbody>
-            {submissions.map((s) => (
-              <tr key={s.id}>
-                <td style={{ borderBottom: "1px solid #eee" }}>{s.id}</td>
-                <td style={{ borderBottom: "1px solid #eee" }}>{s.studentId}</td>
-                <td style={{ borderBottom: "1px solid #eee" }}>{s.questionId}</td>
-                <td style={{ borderBottom: "1px solid #eee" }}>{s.score}</td>
-                <td style={{ borderBottom: "1px solid #eee" }}>
-                  {new Date(s.createdAt).toLocaleString()}
-                </td>
+            {submissions.map((s, idx) => (
+              <tr key={s.id} className={idx % 2 ? "bg-gray-50" : "bg-white"}>
+                <td className="p-3">{s.id}</td>
+                <td className="p-3">{s.studentId}</td>
+                <td className="p-3">{s.questionId}</td>
+                <td className="p-3 text-primary font-semibold">{s.score}</td>
+                <td className="p-3">{new Date(s.createdAt).toLocaleString()}</td>
               </tr>
             ))}
           </tbody>
