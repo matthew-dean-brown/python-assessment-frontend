@@ -32,7 +32,7 @@ export default function Layout({ children }) {
 
                 <button
                   onClick={handleLogout}
-                  className="ml-4 text-sm border border-white/70 rounded px-3 py-1 hover:bg-white hover:text-primary"
+                  className="ml-4 text-sm border border-white/70 rounded px-3 py-1 bg-black"
                 >
                   Logout
                 </button>

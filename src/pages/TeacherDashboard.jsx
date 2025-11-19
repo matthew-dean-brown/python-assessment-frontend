@@ -1,8 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import {
-  fetchAllSubmissions,
-  updateSubmissionScore,
-} from "../api/backend.js";
+import { fetchAllSubmissions, updateSubmissionScore } from "../api/backend.js";
 
 export default function TeacherDashboard() {
   const [submissions, setSubmissions] = useState([]);
@@ -87,6 +84,13 @@ export default function TeacherDashboard() {
     setSaveError("");
     setSaveSuccess("");
   }
+  function handleClose() {
+    setSelectedSubmission(null);
+    setMark("");
+    setSaveError("");
+    setSaveSuccess("");
+  }
+
 
   async function handleSaveMark() {
     if (!selectedSubmission) return;
@@ -137,11 +141,13 @@ export default function TeacherDashboard() {
               <button
                 type="button"
                 onClick={() => handleSelectStudent(stu.id)}
-                className={`w-full text-left px-3 py-2 rounded border ${
-                  selectedStudentId === stu.id
-                    ? "bg-primary text-white border-primary"
-                    : "bg-white text-gray-800 border-gray-200 hover:bg-gray-50"
-                }`}
+                className={`w-full text-left px-3 py-2 border rounded 
+                  bg-white text-gray-800 hover:bg-gray-50
+                  ${selectedStudentId === stu.id
+                    ? "underline underline-offset-4 decoration-1 decoration-primary font-semibold"
+                    : ""
+                  }
+                `}
               >
                 {/* Show total score next to name */}
                 {stu.username}{" "}
@@ -169,7 +175,7 @@ export default function TeacherDashboard() {
 
           {selectedStudentId && filteredSubmissions.length > 0 && (
             <table className="w-full border-collapse bg-white shadow rounded-lg overflow-hidden">
-              <thead className="bg-primary text-white">
+              <thead className="bg-primary text-black">
                 <tr>
                   <th className="p-3 text-left">ID</th>
                   <th className="p-3 text-left">Question</th>
@@ -196,7 +202,7 @@ export default function TeacherDashboard() {
                       <button
                         type="button"
                         onClick={() => handleSelectSubmission(s)}
-                        className="text-sm px-3 py-1 rounded border border-primary text-primary hover:bg-primary hover:text-white"
+                        className="text-sm px-3 py-1 rounded border text-white bg-black"
                       >
                         View / Mark
                       </button>
@@ -232,9 +238,7 @@ export default function TeacherDashboard() {
                 <div>
                   <span className="font-semibold">Submitted: </span>
                   <span>
-                    {new Date(
-                      selectedSubmission.created_at
-                    ).toLocaleString()}
+                    {new Date(selectedSubmission.created_at).toLocaleString()}
                   </span>
                 </div>
               </div>
@@ -242,7 +246,7 @@ export default function TeacherDashboard() {
               <div>
                 <h4 className="font-semibold mb-2">Student Code</h4>
                 <pre className="bg-gray-900 text-gray-100 text-sm rounded-md p-3 overflow-auto max-h-80">
-{selectedSubmission.code}
+                  {selectedSubmission.code}
                 </pre>
               </div>
 
@@ -270,14 +274,27 @@ export default function TeacherDashboard() {
                 </div>
               )}
 
-              <button
-                type="button"
-                onClick={handleSaveMark}
-                disabled={saving}
-                className="px-5 py-2 rounded bg-primary text-white hover:bg-[#1f7fa1] disabled:opacity-70"
-              >
-                {saving ? "Saving..." : "Save mark"}
-              </button>
+              <div className="flex gap-3">
+                {/* Save Button */}
+                <button
+                  type="button"
+                  onClick={handleSaveMark}
+                  disabled={saving}
+                  className="px-5 py-2 rounded bg-black text-white hover:bg-gray-800 disabled:opacity-60"
+                >
+                  {saving ? "Saving..." : "Save mark"}
+                </button>
+
+                {/* Close Button */}
+                <button
+                  type="button"
+                  onClick={handleClose}
+                  className="px-5 py-2 rounded border border-gray-400 text-white bg-black "
+                >
+                  Close
+                </button>
+              </div>
+
             </div>
           )}
         </div>
